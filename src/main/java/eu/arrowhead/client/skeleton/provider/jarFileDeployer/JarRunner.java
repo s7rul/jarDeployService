@@ -1,4 +1,4 @@
-package eu.arrowhead.client.skeleton.provider.jarRunner;
+package eu.arrowhead.client.skeleton.provider.jarFileDeployer;
 
 import java.io.File;
 
