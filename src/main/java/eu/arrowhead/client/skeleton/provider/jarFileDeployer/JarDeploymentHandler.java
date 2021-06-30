@@ -53,13 +53,13 @@ public class JarDeploymentHandler {
         }
     }
 
-    private synchronized void stopp() {
+    private synchronized void stop() {
         this.deployment.stop();
     }
 
-    public static synchronized void stoppAll() {
+    public static synchronized void stopAll() {
         for (JarDeploymentHandler n: handlers) {
-            n.stopp();
+            n.stop();
         }
     }
 
