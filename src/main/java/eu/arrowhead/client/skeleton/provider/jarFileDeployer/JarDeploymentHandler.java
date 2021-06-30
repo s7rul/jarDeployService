@@ -5,18 +5,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
 
 public class JarDeploymentHandler {
     private String jarFilesDirectory;
-    private Integer noDeployments;
-    private List<JarRunner> deployments;
+    private Boolean isDeployed;
+    private JarRunner deployment;
 
     public JarDeploymentHandler(String jarFilesDirectory) {
-        this.noDeployments = 0;
+        this.isDeployed = false;
         this.jarFilesDirectory = jarFilesDirectory;
-        this.deployments = new LinkedList<>();
 
         File directory = new File(this.jarFilesDirectory);
         if (!directory.exists()) {
@@ -30,6 +27,27 @@ public class JarDeploymentHandler {
         }
     }
 
-    public void deploy(MultipartFile jarFile) {
+    public synchronized void deploy(MultipartFile jarFile) {
+        if (isDeployed) {
+            return;
+        }
+        this.isDeployed = true;
+        File f = new File(this.jarFilesDirectory + File.separator + "translator.jar");
+        try {
+            jarFile.transferTo(f);
+            this.deployment = new JarRunner(this.jarFilesDirectory,
+                    "/home/s7rul/tmp-log.log",
+                    "translator.jar",
+                    this);
+            Thread thread = new Thread(this.deployment);
+            thread.start();
+        } catch (Exception e) {
+            System.out.println(e);
+            e.printStackTrace();
+        }
+    }
+
+    synchronized void stopped() {
+        this.isDeployed = false;
     }
 }
