@@ -5,11 +5,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 public class JarDeploymentHandler {
     private String jarFilesDirectory;
     private Boolean isDeployed;
     private JarRunner deployment;
+
+    private static List<JarDeploymentHandler> handlers = new LinkedList<>();
 
     public JarDeploymentHandler(String jarFilesDirectory) {
         this.isDeployed = false;
@@ -25,6 +29,8 @@ public class JarDeploymentHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        this.handlers.add(this);
     }
 
     public synchronized void deploy(MultipartFile jarFile) {
@@ -44,6 +50,16 @@ public class JarDeploymentHandler {
         } catch (Exception e) {
             System.out.println(e);
             e.printStackTrace();
+        }
+    }
+
+    private synchronized void stopp() {
+        this.deployment.stop();
+    }
+
+    public static synchronized void stoppAll() {
+        for (JarDeploymentHandler n: handlers) {
+            n.stopp();
         }
     }
 

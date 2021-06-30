@@ -33,6 +33,7 @@ public class JarRunner implements Runnable {
         try {
             synchronized (pb) {
                 pb.wait();
+                this.proc = null;
             }
             this.handler.stopped();
         } catch (InterruptedException e) {
