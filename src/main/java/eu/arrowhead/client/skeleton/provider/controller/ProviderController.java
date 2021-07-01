@@ -31,9 +31,9 @@ public class ProviderController {
 	// methods
 
 	@PostMapping(LocalConstants.JAR_DEPLOY_URL)
-	public String handleJarDeploy(@RequestParam("file")MultipartFile file) {
+	public String handleJarDeploy(@RequestParam("test")String test, @RequestParam("file")MultipartFile file) {
 		handler.deploy(file);
-	    return "initial success";
+	    return "initial success test: " + test;
 	}
 
 	//-------------------------------------------------------------------------------------------------
