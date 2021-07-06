@@ -1,5 +1,5 @@
 *
 !.gitignore
-!src
-!src/**
-!pom.xml
+!jar-deploy-service/src
+!jar-deploy-service/src/**
+!jar-deploy-service/pom.xml
