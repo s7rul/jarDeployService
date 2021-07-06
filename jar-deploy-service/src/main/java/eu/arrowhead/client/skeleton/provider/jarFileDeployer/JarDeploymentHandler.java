@@ -42,7 +42,7 @@ public class JarDeploymentHandler {
         try {
             jarFile.transferTo(f);
             this.deployment = new JarRunner(this.jarFilesDirectory,
-                    "/home/pi/tmp-log.log",
+                    "/home/s7rul/tmp-log.log",
                     "translator.jar",
                     this);
             Thread thread = new Thread(this.deployment);

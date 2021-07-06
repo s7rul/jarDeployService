@@ -19,7 +19,7 @@ public class ProviderController {
 	//=================================================================================================
 	// members
 
-	private JarDeploymentHandler handler = new JarDeploymentHandler("/home/pi/tmp-jar-dir");
+	private JarDeploymentHandler handler = new JarDeploymentHandler("/home/s7rul/tmp-jar-dir");
 
 	//TODO: add your variables here
 
