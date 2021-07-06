@@ -3,3 +3,4 @@
 !jar-deploy-service/src
 !jar-deploy-service/src/**
 !jar-deploy-service/pom.xml
+!pom.xml
