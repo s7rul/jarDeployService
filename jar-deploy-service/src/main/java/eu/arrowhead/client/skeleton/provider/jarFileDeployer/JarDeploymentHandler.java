@@ -5,6 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,14 +34,15 @@ public class JarDeploymentHandler {
         this.handlers.add(this);
     }
 
-    public synchronized void deploy(MultipartFile jarFile) {
+    public synchronized void deploy(String base64JarFile) {
         if (isDeployed) {
             return;
         }
         this.isDeployed = true;
         File f = new File(this.jarFilesDirectory + File.separator + "translator.jar");
         try {
-            jarFile.transferTo(f);
+            byte[] byteJarFile = Base64.getDecoder().decode(base64JarFile);
+            org.apache.commons.io.FileUtils.writeByteArrayToFile(f, byteJarFile);
             this.deployment = new JarRunner(this.jarFilesDirectory,
                     "/home/s7rul/tmp-log.log",
                     "translator.jar",

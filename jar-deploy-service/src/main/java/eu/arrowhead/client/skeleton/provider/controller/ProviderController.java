@@ -1,11 +1,9 @@
 package eu.arrowhead.client.skeleton.provider.controller;
 
 import eu.arrowhead.client.skeleton.provider.LocalConstants;
+import eu.arrowhead.client.skeleton.provider.jarFileDeployer.DeployJarRequestDTO;
 import eu.arrowhead.client.skeleton.provider.jarFileDeployer.JarDeploymentHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import eu.arrowhead.common.CommonConstants;
 
@@ -26,10 +24,18 @@ public class ProviderController {
 	//=================================================================================================
 	// methods
 
+	/*
 	@PostMapping(LocalConstants.JAR_DEPLOY_URL)
 	public String handleJarDeploy(@RequestParam("test")String test, @RequestParam("file")MultipartFile file) {
 		handler.deploy(file);
 	    return "initial success test: " + test;
+	}
+	*/
+
+	@PostMapping(LocalConstants.JAR_DEPLOY_URL)
+	public String handleJarDeploy(@RequestBody final DeployJarRequestDTO dto) {
+		handler.deploy(dto.getFile());
+		return "initial success test: " + dto.getPort();
 	}
 
 	//-------------------------------------------------------------------------------------------------
